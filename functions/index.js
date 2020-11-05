@@ -1,7 +1,7 @@
 const functions = require("firebase-functions");
+const app = require("express")();
+const { loginUser } = require("./API/users");
 
-exports.helloWorld = functions
-  .region("europe-west1")
-  .https.onRequest((request, response) => {
-    response.send("Hello from Firebase!");
-  });
+app.post("/login", loginUser);
+
+exports.api = functions.https.onRequest(app);
