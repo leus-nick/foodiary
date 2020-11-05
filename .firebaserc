@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "foodapp-bd5f7"
+    "foodiary": "foodiary-42a16",
+    "default": "foodiary-42a16"
   }
 }
