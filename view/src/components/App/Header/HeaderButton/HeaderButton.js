@@ -1,6 +1,5 @@
 import { ExitToApp } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
-import { authMiddleWare } from "../../../../util/auth";
 
 const useStyles = makeStyles(() => ({
   root: {

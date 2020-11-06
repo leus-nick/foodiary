@@ -16,7 +16,6 @@ const Home = (props) => {
     axios
       .get("/user")
       .then((response) => {
-        console.log(response.data);
         setUser({
           username: response.data.userCredentials.username,
           goal: response.data.userCredentials.goal,
@@ -29,7 +28,7 @@ const Home = (props) => {
         }
         console.log(error);
       });
-  }, []);
+  }, [authToken, props.history]);
 
   const logoutHandler = (event) => {
     localStorage.removeItem("AuthToken");
