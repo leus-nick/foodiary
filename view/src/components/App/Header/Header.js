@@ -1,7 +1,7 @@
 import { HeaderButton } from "./HeaderButton";
 import styles from "./Header.module.css";
 
-const Header = () => {
+const Header = ({ logout }) => {
   return (
     <header className={styles.header}>
       <h1 className={styles.headerTitle}>
@@ -9,7 +9,7 @@ const Header = () => {
           Foo<span>diary</span>
         </a>
       </h1>
-      <HeaderButton />
+      <HeaderButton logout={logout} />
     </header>
   );
 };

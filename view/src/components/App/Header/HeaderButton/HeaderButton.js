@@ -1,5 +1,6 @@
 import { ExitToApp } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
+import { authMiddleWare } from "../../../../util/auth";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -7,19 +8,10 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const HeaderButton = () => {
+const HeaderButton = ({ logout }) => {
   const classes = useStyles();
 
-  const handleLogoutButtonClick = () => {
-    console.log("logout");
-  };
-
-  return (
-    <ExitToApp
-      classes={{ root: classes.root }}
-      onClick={handleLogoutButtonClick}
-    />
-  );
+  return <ExitToApp classes={{ root: classes.root }} onClick={logout} />;
 };
 
 export { HeaderButton };

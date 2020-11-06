@@ -5,7 +5,6 @@ firebase.initializeApp(config);
 const { validateLoginData, validateSignUpData } = require("../util/validators");
 
 exports.loginUser = (request, response) => {
-  console.log(typeof request.body);
   const user = {
     email: request.body.email,
     password: request.body.password,
