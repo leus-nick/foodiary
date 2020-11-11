@@ -17,14 +17,13 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const AddCardButton = ({ onclick }) => {
+const AddCardButton = () => {
   const classes = useStyles();
 
   return (
     <ButtonBase
       classes={{ root: classes.root }}
       TouchRippleProps={{ classes: { root: classes.rippleVisible } }}
-      onClick={onclick}
     >
       <AddCircleOutlineIcon classes={{ root: classes.icon }} />
     </ButtonBase>

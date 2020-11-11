@@ -20,6 +20,7 @@ exports.loginUser = (request, response) => {
       return data.user.getIdToken();
     })
     .then((token) => {
+      console.log(token);
       return response.json({ token });
     })
     .catch((error) => {
@@ -68,6 +69,7 @@ exports.signUpUser = (request, response) => {
         email: newUser.email,
         createdAt: new Date().toISOString(),
         goal: newUser.goal,
+        cards: [],
         userId,
       };
       return db.doc(`/users/${newUser.username}`).set(userCredentials);

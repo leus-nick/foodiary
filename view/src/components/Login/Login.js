@@ -83,6 +83,7 @@ class Login extends Component {
   };
 
   render() {
+    console.log("render Login");
     const { classes } = this.props;
     const { errors, loading } = this.state;
     return (

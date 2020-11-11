@@ -86,6 +86,7 @@ class Signup extends Component {
   };
 
   render() {
+    console.log("render SignUp");
     const { classes } = this.props;
     const { errors, loading } = this.state;
     return (

@@ -2,6 +2,7 @@ import { HeaderButton } from "./HeaderButton";
 import styles from "./Header.module.css";
 
 const Header = ({ logout }) => {
+  console.log("redner Header");
   return (
     <header className={styles.header}>
       <h1 className={styles.headerTitle}>

@@ -8,6 +8,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 const HeaderButton = ({ logout }) => {
+  console.log("render HeaderButton");
   const classes = useStyles();
 
   return <ExitToApp classes={{ root: classes.root }} onClick={logout} />;
