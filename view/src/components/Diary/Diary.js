@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
+import { DishList } from "../DishList";
 import { AddCard } from "./AddCard";
-import { Card } from "./Card";
+import { DishCard } from "./Card";
 import styles from "./Diary.module.css";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
@@ -9,6 +10,7 @@ const Diary = () => {
   console.log("render Diary");
   const [cards, setCards] = useState({});
   const [userGoal, setUserGoal] = useState(0);
+  const [expanded, setExpanded] = useState(false);
 
   useEffect(() => {
     fetchUserCards();
@@ -86,7 +88,7 @@ const Diary = () => {
 
   const handleDeleteCardClick = (deletedId) => {
     let result = Object.values(cards).filter((card) => {
-      return card.id != deletedId;
+      return card.id !== deletedId;
     });
     axios
       .post("/user", {
@@ -102,20 +104,27 @@ const Diary = () => {
   };
 
   return (
-    <div className={styles.diary}>
-      <AddCard handleClick={handleAddCardClick} />
-      {Object.values(cards).map((card, i) => {
-        return (
-          <Card
-            key={card.id}
-            card={card}
-            goal={userGoal}
-            id={Object.keys(cards)[i]}
-            deleteCard={handleDeleteCardClick}
-          />
-        );
-      })}
-    </div>
+    <>
+      <div className={expanded ? styles.diaryExp : styles.diary}>
+        <AddCard handleClick={handleAddCardClick} />
+        {Object.values(cards)
+          .reverse()
+          .map((card, i) => {
+            return (
+              <DishCard
+                key={card.id}
+                card={card}
+                goal={userGoal}
+                id={Object.keys(cards)[i]}
+                exp={expanded}
+                expandMenu={setExpanded}
+                deleteCard={handleDeleteCardClick}
+              />
+            );
+          })}
+      </div>
+      {expanded ? <DishList /> : null}
+    </>
   );
 };
 

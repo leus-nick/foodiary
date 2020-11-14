@@ -2,6 +2,7 @@ import { Header } from "../Header";
 import { Diary } from "../Diary";
 import { Goal } from "../Goal";
 import { authMiddleWare } from "../../util/auth";
+import styles from "./Home.module.css";
 
 const Home = (props) => {
   console.log(`render Home`);
@@ -16,7 +17,7 @@ const Home = (props) => {
     <>
       <Header logout={logoutHandler} />
       <Goal />
-      <main>
+      <main className={styles.main}>
         <Diary />
       </main>
     </>

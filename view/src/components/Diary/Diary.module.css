@@ -2,8 +2,28 @@
   padding: 10px;
   height: 100%;
   flex-basis: 100%;
-  transition: all 0.5s ease-in-out;
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;
+}
+
+.diaryExp {
+  padding: 10px;
+  height: 100%;
+  flex-basis: 50%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+}
+
+@media (min-width: 1980px) {
+  .diary {
+    max-width: 1800px;
+  }
+}
+
+@media (max-width: 1100px) {
+  .diary {
+    max-width: 100%;
+  }
 }

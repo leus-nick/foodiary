@@ -69,6 +69,7 @@ class Login extends Component {
       .post("/login", userData)
       .then((response) => {
         localStorage.setItem("AuthToken", `Bearer ${response.data.token}`);
+        localStorage.setItem("AuthTokenTime", new Date().getTime());
         this.setState({
           loading: false,
         });
