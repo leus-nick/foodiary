@@ -6,8 +6,9 @@ import styles from "./Diary.module.css";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 
-const Diary = () => {
+const Diary = ({props}) => {
   console.log("render Diary");
+  // console.log("diary component props: ", dishMenuItems);
   const [cards, setCards] = useState({});
   const [userGoal, setUserGoal] = useState(0);
   const [expanded, setExpanded] = useState(false);

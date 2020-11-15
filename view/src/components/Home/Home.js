@@ -1,12 +1,41 @@
+import React, { useState, useEffect } from "react";
 import { Header } from "../Header";
 import { Diary } from "../Diary";
 import { Goal } from "../Goal";
 import { authMiddleWare } from "../../util/auth";
+import axios from "axios";
 import styles from "./Home.module.css";
 
+const dishContext = React.createContext(null);
+
 const Home = (props) => {
+  const [dishItems, setDishItems] = useState([]);
   console.log(`render Home`);
   authMiddleWare(props.history);
+
+  useEffect(() => {
+    let dishes = JSON.parse(localStorage.getItem("DishMenuItems"));
+    dishes ? setDishItems(dishes) : fetchDishMenuItems();
+  }, []);
+  console.log("in start", dishItems);
+
+  const fetchDishMenuItems = () => {
+    axios
+      .get(
+        "https://api.spoonacular.com/recipes/random?apiKey=70bf437e2d094f64bac4878ca64e33fc&number=50"
+      )
+      .then((response) => {
+        localStorage.setItem(
+          "DishMenuItems",
+          JSON.stringify(response.data.recipes)
+        );
+        setDishItems(response.data.recipes);
+        console.log("api call");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const logoutHandler = () => {
     localStorage.removeItem("AuthToken");
@@ -15,13 +44,15 @@ const Home = (props) => {
 
   return (
     <>
-      <Header logout={logoutHandler} />
-      <Goal />
-      <main className={styles.main}>
-        <Diary />
-      </main>
+      <dishContext.Provider value={dishItems}>
+        <Header logout={logoutHandler} />
+        <Goal />
+        <main className={styles.main}>
+          <Diary />
+        </main>
+      </dishContext.Provider>
     </>
   );
 };
 
-export { Home };
+export { Home, dishContext };
