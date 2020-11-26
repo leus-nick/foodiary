@@ -17,19 +17,18 @@ const Home = (props) => {
     let dishes = JSON.parse(localStorage.getItem("DishMenuItems"));
     dishes ? setDishItems(dishes) : fetchDishMenuItems();
   }, []);
-  console.log("in start", dishItems);
 
   const fetchDishMenuItems = () => {
     axios
       .get(
-        "https://api.spoonacular.com/recipes/random?apiKey=70bf437e2d094f64bac4878ca64e33fc&number=50"
+        "https://api.spoonacular.com/recipes/complexSearch?apiKey=70bf437e2d094f64bac4878ca64e33fc&number=20&addRecipeNutrition=true"
       )
       .then((response) => {
         localStorage.setItem(
           "DishMenuItems",
-          JSON.stringify(response.data.recipes)
+          JSON.stringify(response.data.results)
         );
-        setDishItems(response.data.recipes);
+        setDishItems(response.data.results);
         console.log("api call");
       })
       .catch((error) => {

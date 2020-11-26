@@ -6,12 +6,12 @@ import styles from "./Diary.module.css";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 
-const Diary = ({props}) => {
+const Diary = ({ props }) => {
   console.log("render Diary");
-  // console.log("diary component props: ", dishMenuItems);
   const [cards, setCards] = useState({});
   const [userGoal, setUserGoal] = useState(0);
   const [expanded, setExpanded] = useState(false);
+  const [expandedCard, setExpandedCard] = useState(null);
 
   useEffect(() => {
     fetchUserCards();
@@ -55,11 +55,7 @@ const Diary = ({props}) => {
           ...cards,
           [`card ${uuidv4()}`]: {
             day: formatDay(new Date()),
-            dishes: [
-              { title: "Potato", calories: 350 },
-              { title: "Egg", calories: 30 },
-              { title: "Tea", calories: 5 },
-            ],
+            dishes: [],
             id: uuidv4(),
           },
         },
@@ -76,11 +72,7 @@ const Diary = ({props}) => {
           ...cards,
           [`card ${uuidv4()}`]: {
             day: formatDay(new Date()),
-            dishes: [
-              { title: "Potato", calories: 350 },
-              { title: "Egg", calories: 30 },
-              { title: "Tea", calories: 5 },
-            ],
+            dishes: [],
             id: uuidv4(),
           },
         })
@@ -104,6 +96,17 @@ const Diary = ({props}) => {
     setCards((cards) => (cards = { ...result }));
   };
 
+  const handleExpandCardClick = (id) => {
+    setExpandedCard(id);
+    setExpanded(!expanded);
+    console.log(id);
+  };
+
+  const handleAddToCardClick = (dish) => {
+    console.log(expandedCard);
+    console.log(dish);
+  };
+
   return (
     <>
       <div className={expanded ? styles.diaryExp : styles.diary}>
@@ -117,14 +120,13 @@ const Diary = ({props}) => {
                 card={card}
                 goal={userGoal}
                 id={Object.keys(cards)[i]}
-                exp={expanded}
-                expandMenu={setExpanded}
+                expandMenu={handleExpandCardClick}
                 deleteCard={handleDeleteCardClick}
               />
             );
           })}
       </div>
-      {expanded ? <DishList /> : null}
+      {expanded ? <DishList addToCard={handleAddToCardClick} /> : null}
     </>
   );
 };

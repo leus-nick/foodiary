@@ -39,7 +39,9 @@ const DishCard = ({ card, goal, deleteCard, exp, expandMenu }) => {
         <CardActions className="actions">
           <IconButton
             aria-label="add new dish to card"
-            onClick={() => expandMenu(!exp)}
+            onClick={() => {
+              expandMenu(id);
+            }}
           >
             <Add />
           </IconButton>

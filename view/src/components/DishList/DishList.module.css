@@ -1,5 +1,4 @@
 .dishList {
-  background-color: aquamarine;
   flex-basis: 50%;
   transition: all 0.5s ease-in-out;
 }
