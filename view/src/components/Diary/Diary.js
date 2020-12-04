@@ -12,6 +12,7 @@ const Diary = ({ props }) => {
   const [userGoal, setUserGoal] = useState(0);
   const [expanded, setExpanded] = useState(false);
   const [expandedCard, setExpandedCard] = useState(null);
+  const [sum, setSum] = useState(0);
 
   useEffect(() => {
     fetchUserCards();
@@ -99,12 +100,32 @@ const Diary = ({ props }) => {
   const handleExpandCardClick = (id) => {
     setExpandedCard(id);
     setExpanded(!expanded);
-    console.log(id);
   };
 
   const handleAddToCardClick = (dish) => {
-    console.log(expandedCard);
-    console.log(dish);
+    let result = Object.values(cards).map((card) => {
+      if (card.id === expandedCard) {
+        if (dish && sum <= userGoal) {
+          card.dishes.push(dish);
+          setSum((sum) => (sum += dish.calories));
+        } else {
+          alert("You rich your goal for today.");
+        }
+      }
+      return card;
+    });
+
+    axios
+      .post("/user", {
+        cards: { ...result },
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    setCards((cards) => (cards = { ...result }));
   };
 
   return (

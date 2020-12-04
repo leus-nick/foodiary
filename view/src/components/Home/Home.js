@@ -21,7 +21,7 @@ const Home = (props) => {
   const fetchDishMenuItems = () => {
     axios
       .get(
-        "https://api.spoonacular.com/recipes/complexSearch?apiKey=70bf437e2d094f64bac4878ca64e33fc&number=20&addRecipeNutrition=true"
+        "https://api.spoonacular.com/recipes/complexSearch?apiKey=70bf437e2d094f64bac4878ca64e33fc&number=50&addRecipeNutrition=true&diet=Whole30&sort=random&type=main course,side dish,breakfast,soup,dessert"
       )
       .then((response) => {
         localStorage.setItem(
