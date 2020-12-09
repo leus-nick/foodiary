@@ -1,212 +1,146 @@
-import React, { Component } from "react";
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import Link from "@material-ui/core/Link";
-import Grid from "@material-ui/core/Grid";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import Typography from "@material-ui/core/Typography";
-import Container from "@material-ui/core/Container";
-import withStyles from "@material-ui/core/styles/withStyles";
-import CircularProgress from "@material-ui/core/CircularProgress";
-
+import React, { useState } from "react";
+import {
+  Button,
+  CssBaseline,
+  TextField,
+  Link,
+  Grid,
+  Typography,
+  Container,
+  CircularProgress,
+} from "@material-ui/core";
 import axios from "axios";
 
-const styles = (theme) => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-  progess: {
-    position: "absolute",
-  },
-});
+const Signup = (props) => {
+  console.log("render SignUp");
+  const [username, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [goal, setGoal] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-class Signup extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      username: "",
-      email: "",
-      password: "",
-      goal: "",
-      confirmPassword: "",
-      errors: [],
-      loading: false,
-    };
-  }
-
-  handleChange = (event) => {
-    this.setState({
-      [event.target.name]: event.target.value,
-    });
-  };
-
-  handleSubmit = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    this.setState({ loading: true });
+    setLoading(true);
+
     const newUserData = {
-      username: this.state.username,
-      email: this.state.email,
-      goal: this.state.goal,
-      password: this.state.password,
-      confirmPassword: this.state.confirmPassword,
+      username: username,
+      email: email,
+      goal: goal,
+      password: password,
+      confirmPassword: confirmPassword,
     };
+
     axios
       .post("/signup", newUserData)
       .then((response) => {
         console.log(response);
         localStorage.setItem("AuthToken", `${response.data.token}`);
-        this.setState({
-          loading: false,
-        });
-        this.props.history.push("/");
+        setLoading(false);
+        props.history.push("/");
       })
       .catch((error) => {
-        this.setState({
-          errors: error.response.data,
-          loading: false,
-        });
+        setError(error.response.data.general);
+        setLoading(false);
       });
   };
 
-  render() {
-    console.log("render SignUp");
-    const { classes } = this.props;
-    const { errors, loading } = this.state;
-    return (
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign up
-          </Typography>
-          <form className={classes.form} noValidate>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="username"
-                  label="User Name"
-                  name="username"
-                  autoComplete="username"
-                  helperText={errors.username}
-                  error={errors.username ? true : false}
-                  onChange={this.handleChange}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="goal"
-                  label="Goal"
-                  name="goal"
-                  autoComplete="goal"
-                  helperText={errors.goal}
-                  error={errors.goal ? true : false}
-                  onChange={this.handleChange}
-                />
-              </Grid>
-
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                  helperText={errors.email}
-                  error={errors.email ? true : false}
-                  onChange={this.handleChange}
-                />
-              </Grid>
-
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="current-password"
-                  helperText={errors.password}
-                  error={errors.password ? true : false}
-                  onChange={this.handleChange}
-                />
-              </Grid>
-
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  name="confirmPassword"
-                  label="Confirm Password"
-                  type="password"
-                  id="confirmPassword"
-                  autoComplete="current-password"
-                  onChange={this.handleChange}
-                />
-              </Grid>
+  return (
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <div>
+        <Typography component="h1" variant="h5">
+          Sign up
+        </Typography>
+        <form noValidate>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="username"
+                label="User Name"
+                name="username"
+                autoComplete="username"
+                onChange={(event) => setUserName(event.target.value)}
+              />
             </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              onClick={this.handleSubmit}
-              disabled={
-                loading ||
-                !this.state.email ||
-                !this.state.password ||
-                !this.state.username ||
-                !this.state.goal
-              }
-            >
-              Sign Up
-              {loading && (
-                <CircularProgress size={30} className={classes.progess} />
-              )}
-            </Button>
-            <Grid container justify="flex-end">
-              <Grid item>
-                <Link href="login" variant="body2">
-                  Already have an account? Sign in
-                </Link>
-              </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="goal"
+                label="Goal"
+                name="goal"
+                autoComplete="goal"
+                onChange={(event) => setGoal(event.target.value)}
+              />
             </Grid>
-          </form>
-        </div>
-      </Container>
-    );
-  }
-}
 
-export default withStyles(styles)(Signup);
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                onChange={(event) => setEmail(event.target.value)}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                onChange={(event) => setPassword(event.target.value)}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="confirmPassword"
+                label="Confirm Password"
+                type="password"
+                id="confirmPassword"
+                autoComplete="current-password"
+                onChange={(event) => setConfirmPassword(event.target.value)}
+              />
+            </Grid>
+          </Grid>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            onClick={handleSubmit}
+            disabled={loading || !email || !password || !username || !goal}
+          >
+            Sign Up
+            {loading && <CircularProgress size={30} />}
+          </Button>
+          <Link href="login" variant="body2">
+            Already have an account? Sign in
+          </Link>
+          {error && <Typography variant="body2">{error}</Typography>}
+        </form>
+      </div>
+    </Container>
+  );
+};
+
+export { Signup };

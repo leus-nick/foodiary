@@ -42,6 +42,7 @@ const DishListItem = ({ dish, addToCard }) => {
               addToCard({
                 title: title,
                 calories: dish.nutrition.nutrients[0].amount,
+                id: dish.id,
               })
             }
             aria-label="add to card"

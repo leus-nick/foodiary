@@ -128,6 +128,29 @@ const Diary = ({ props }) => {
     setCards((cards) => (cards = { ...result }));
   };
 
+  const handleDeleteDishClick = (dishId, cardId) => {
+    let result = Object.values(cards).map((card) => {
+      if (card.id === cardId) {
+        card.dishes = card.dishes.filter((dish) => {
+          return dish.id !== dishId;
+        });
+      }
+      return card;
+    });
+    
+    axios
+      .post("/user", {
+        cards: { ...result },
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    setCards((cards) => (cards = { ...result }));
+  };
+
   return (
     <>
       <div className={expanded ? styles.diaryExp : styles.diary}>
@@ -143,6 +166,7 @@ const Diary = ({ props }) => {
                 id={Object.keys(cards)[i]}
                 expandMenu={handleExpandCardClick}
                 deleteCard={handleDeleteCardClick}
+                deleteFromCard={handleDeleteDishClick}
               />
             );
           })}

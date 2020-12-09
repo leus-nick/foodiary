@@ -6,10 +6,10 @@ import {
   Typography,
   IconButton,
 } from "@material-ui/core";
-import { Delete, Add } from "@material-ui/icons";
+import { Delete, Add, Clear } from "@material-ui/icons";
 import styles from "./Card.module.css";
 
-const DishCard = ({ card, goal, deleteCard, exp, expandMenu }) => {
+const DishCard = ({ card, goal, deleteCard, expandMenu, deleteFromCard }) => {
   console.log("render card");
   let { day, dishes, id } = card;
   let calories = 0;
@@ -22,14 +22,17 @@ const DishCard = ({ card, goal, deleteCard, exp, expandMenu }) => {
           {dishes.map((dish, i) => {
             calories += dish.calories;
             return (
-              <Typography
-                variant="h6"
-                color="textSecondary"
-                component="p"
-                key={i}
-              >
-                {dish.title}
-              </Typography>
+              <div key={i}>
+                <Typography variant="h6" color="textSecondary" component="p">
+                  {dish.title}
+                </Typography>
+                <IconButton
+                  onClick={() => deleteFromCard(dish.id, id)}
+                  aria-label="delete dish"
+                >
+                  <Clear />
+                </IconButton>
+              </div>
             );
           })}
           <Typography variant="h6" color="textSecondary" component="p">
