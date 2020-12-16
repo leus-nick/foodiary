@@ -2,16 +2,21 @@ import { ExitToApp } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(() => ({
-  root: {
+  icon: {
     fontSize: 32,
+    cursor: "pointer",
+    transition: "color .3s ease",
+    "&:hover": {
+      color: "#58d68d",
+    },
   },
 }));
 
 const HeaderButton = ({ logout }) => {
   console.log("render HeaderButton");
-  const classes = useStyles();
+  const styles = useStyles();
 
-  return <ExitToApp classes={{ root: classes.root }} onClick={logout} />;
+  return <ExitToApp className={styles.icon} onClick={logout} />;
 };
 
 export { HeaderButton };

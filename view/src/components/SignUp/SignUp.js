@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import {
+  Paper,
+  Avatar,
   Button,
-  CssBaseline,
   TextField,
   Link,
   Grid,
@@ -9,16 +10,93 @@ import {
   Container,
   CircularProgress,
 } from "@material-ui/core";
+import { LockOutlined } from "@material-ui/icons";
+import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
 
+const useStyles = makeStyles({
+  paper: {
+    margin: "50px auto",
+    minHeight: "calc(100vh - 100px)",
+    width: "100%",
+    maxWidth: "1800px",
+    display: "flex",
+    justifyContent: "flex-end",
+    backgroundImage:
+      "url(https://i1.wp.com/www.eatthis.com/wp-content/uploads/2019/12/orange-chicken-recipe.jpg?fit=1200%2C879&ssl=1)",
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+    backgroundPosition: "center center",
+    "@media (max-width:960px)": {
+      margin: "0px auto",
+      minHeight: "100vh",
+    },
+  },
+  inner: {
+    marginRight: "0px",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "white",
+    width: "35%",
+    "@media (max-width:1280px)": {
+      width: "45%",
+    },
+    "@media (max-width:960px)": {
+      width: "100%",
+    },
+  },
+  avatar: {
+    backgroundColor: "#58d68d",
+  },
+  form: {
+    marginTop: "20px",
+    width: "100%",
+  },
+  input: {
+    "& label.Mui-focused": {
+      color: "#58d68d",
+    },
+    "& .MuiOutlinedInput-root": {
+      "&:hover fieldset": {
+        borderColor: "#58d68d",
+      },
+      "&.Mui-focused fieldset": {
+        borderColor: "#58d68d",
+      },
+    },
+  },
+  button: {
+    fontFamily: ["Alegreya Sans", "serif"].join(","),
+    fontSize: "1rem",
+    backgroundColor: "#58d68d",
+    padding: "10px 0px",
+    "&:hover": {
+      backgroundColor: "#58d68d",
+    },
+  },
+  progress: {
+    color: "#58d68d",
+  },
+  link: {
+    fontFamily: ["Alegreya Sans", "serif"].join(","),
+    fontSize: "1rem",
+    color: "black",
+    "&:hover": {
+      color: "#85929e",
+    },
+  },
+});
+
 const Signup = (props) => {
-  console.log("render SignUp");
+  const styles = useStyles();
   const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [goal, setGoal] = useState("");
-  const [error, setError] = useState("");
+  const [errors, setError] = useState({});
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = (event) => {
@@ -42,19 +120,21 @@ const Signup = (props) => {
         props.history.push("/");
       })
       .catch((error) => {
-        setError(error.response.data.general);
+        setError(error.response.data);
         setLoading(false);
       });
   };
 
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div>
-        <Typography component="h1" variant="h5">
+    <Paper className={styles.paper}>
+      <Container component="div" maxWidth="md" className={styles.inner}>
+        <Avatar className={styles.avatar}>
+          <LockOutlined />
+        </Avatar>
+        <Typography component="h1" variant="h1">
           Sign up
         </Typography>
-        <form noValidate>
+        <form noValidate className={styles.form}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -65,6 +145,9 @@ const Signup = (props) => {
                 label="User Name"
                 name="username"
                 autoComplete="username"
+                helperText={errors.username}
+                error={errors.username ? true : false}
+                className={styles.input}
                 onChange={(event) => setUserName(event.target.value)}
               />
             </Grid>
@@ -72,15 +155,18 @@ const Signup = (props) => {
               <TextField
                 variant="outlined"
                 required
+                type="number"
                 fullWidth
                 id="goal"
                 label="Goal"
                 name="goal"
                 autoComplete="goal"
+                helperText={errors.goal}
+                error={errors.goal ? true : false}
+                className={styles.input}
                 onChange={(event) => setGoal(event.target.value)}
               />
             </Grid>
-
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
@@ -90,10 +176,12 @@ const Signup = (props) => {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                helperText={errors.email}
+                error={errors.email ? true : false}
+                className={styles.input}
                 onChange={(event) => setEmail(event.target.value)}
               />
             </Grid>
-
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
@@ -104,6 +192,9 @@ const Signup = (props) => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                helperText={errors.password}
+                error={errors.password ? true : false}
+                className={styles.input}
                 onChange={(event) => setPassword(event.target.value)}
               />
             </Grid>
@@ -118,28 +209,44 @@ const Signup = (props) => {
                 type="password"
                 id="confirmPassword"
                 autoComplete="current-password"
+                helperText={errors.confirmPassword}
+                error={errors.confirmPassword ? true : false}
+                className={styles.input}
                 onChange={(event) => setConfirmPassword(event.target.value)}
               />
             </Grid>
+            <Grid item xs={12}>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                onClick={handleSubmit}
+                className={styles.button}
+                disabled={
+                  loading ||
+                  !email ||
+                  !confirmPassword ||
+                  !password ||
+                  !username ||
+                  !goal
+                }
+              >
+                Sign Up
+                {loading && (
+                  <CircularProgress size={20} className={styles.progress} />
+                )}
+              </Button>
+            </Grid>
+            <Grid item xs={12}>
+              <Link href="login" variant="body2" className={styles.link}>
+                Already have an account? Sign in
+              </Link>
+            </Grid>
           </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            onClick={handleSubmit}
-            disabled={loading || !email || !password || !username || !goal}
-          >
-            Sign Up
-            {loading && <CircularProgress size={30} />}
-          </Button>
-          <Link href="login" variant="body2">
-            Already have an account? Sign in
-          </Link>
-          {error && <Typography variant="body2">{error}</Typography>}
         </form>
-      </div>
-    </Container>
+      </Container>
+    </Paper>
   );
 };
 

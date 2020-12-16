@@ -1,10 +1,24 @@
 import { useState, useEffect } from "react";
-import { TextField, Button } from "@material-ui/core";
-import styles from "./Goal.module.css";
+import { TextField, Button, Typography } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
 
+const useStyles = makeStyles({
+  container: {
+    height: "70px",
+    maxHeight: "70px",
+    minHeight: "70px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  goal: {
+    cursor: "pointer",
+  },
+});
+
 const Goal = () => {
-  console.log("render Goal");
+  const styles = useStyles();
   const [userGoal, setUserGoal] = useState(0);
   const [edit, setEdit] = useState(false);
   const [goalError, setGoalError] = useState("");
@@ -49,9 +63,9 @@ const Goal = () => {
   };
 
   return (
-    <div className={styles.goal}>
+    <div className={styles.container}>
       {edit ? (
-        <div>
+        <>
           <TextField
             error={goalError ? true : false}
             id="goalInput"
@@ -70,11 +84,15 @@ const Goal = () => {
           >
             set
           </Button>
-        </div>
+        </>
       ) : (
-        <h2 className={styles.goalText} onClick={() => setEdit(true)}>
+        <Typography
+          variant="h2"
+          onClick={() => setEdit(true)}
+          className={styles.goal}
+        >
           {userGoal}
-        </h2>
+        </Typography>
       )}
     </div>
   );

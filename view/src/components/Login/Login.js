@@ -3,7 +3,7 @@ import {
   Paper,
   Avatar,
   Button,
-  CssBaseline,
+  Grid,
   TextField,
   Link,
   Typography,
@@ -11,11 +11,91 @@ import {
   CircularProgress,
 } from "@material-ui/core";
 import { LockOutlined } from "@material-ui/icons";
+import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
-import styles from "./Login.module.css";
+
+const useStyles = makeStyles({
+  paper: {
+    margin: "50px auto",
+    minHeight: "calc(100vh - 100px)",
+    width: "100%",
+    maxWidth: "1800px",
+    display: "flex",
+    justifyContent: "flex-end",
+    backgroundImage:
+      "url(https://i1.wp.com/www.eatthis.com/wp-content/uploads/2019/12/orange-chicken-recipe.jpg?fit=1200%2C879&ssl=1)",
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+    backgroundPosition: "center center",
+    "@media (max-width:960px)": {
+      margin: "0px auto",
+      minHeight: "100vh",
+    },
+  },
+  inner: {
+    marginRight: "0px",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "white",
+    width: "35%",
+    "@media (max-width:1280px)": {
+      width: "45%",
+    },
+    "@media (max-width:960px)": {
+      width: "100%",
+    },
+  },
+  avatar: {
+    backgroundColor: "#58d68d",
+  },
+  form: {
+    marginTop: "20px",
+    width: "100%",
+  },
+  input: {
+    "& label.Mui-focused": {
+      color: "#58d68d",
+    },
+    "& .MuiOutlinedInput-root": {
+      "&:hover fieldset": {
+        borderColor: "#58d68d",
+      },
+      "&.Mui-focused fieldset": {
+        borderColor: "#58d68d",
+      },
+    },
+  },
+  button: {
+    fontFamily: ["Alegreya Sans", "serif"].join(","),
+    fontSize: "1rem",
+    backgroundColor: "#58d68d",
+    padding: "10px 0px",
+    "&:hover": {
+      backgroundColor: "#58d68d",
+    },
+  },
+  progress: {
+    color: "#58d68d",
+  },
+  error: {
+    fontFamily: ["Alegreya Sans", "serif"].join(","),
+    fontSize: "1rem",
+    color: "red",
+  },
+  link: {
+    fontFamily: ["Alegreya Sans", "serif"].join(","),
+    fontSize: "1rem",
+    color: "black",
+    "&:hover": {
+      color: "#85929e",
+    },
+  },
+});
 
 const Login = (props) => {
-  console.log("render Login");
+  const styles = useStyles();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -45,55 +125,75 @@ const Login = (props) => {
   };
 
   return (
-    <Paper className={styles.login}>
-      <CssBaseline />
-      <Container component="div" maxWidth="xs" className={styles.loginInner}>
-        <Avatar>
+    <Paper className={styles.paper}>
+      <Container component="div" maxWidth="md" className={styles.inner}>
+        <Avatar className={styles.avatar}>
           <LockOutlined />
         </Avatar>
-        <Typography component="h1" variant="h5">
-          Login
-        </Typography>
-        <form noValidate>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-            onChange={(event) => setEmail(event.target.value)}
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            onChange={(event) => setPassword(event.target.value)}
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            onClick={handleSubmit}
-            disabled={loading || !email || !password}
-          >
-            Sign In
-            {loading && <CircularProgress size={30} />}
-          </Button>
-          <Link href="signup" variant="body2">
-            {"Don't have an account? Sign Up"}
-          </Link>
-          {error && <Typography variant="body2">{error}</Typography>}
+        <Typography variant="h1">Login</Typography>
+        <form noValidate className={styles.form}>
+          <Grid container spacing={2} direction="column" justify="center">
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                autoFocus
+                className={styles.input}
+                onChange={(event) => setEmail(event.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                className={styles.input}
+                onChange={(event) => setPassword(event.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                onClick={handleSubmit}
+                className={styles.button}
+                disabled={loading || !email || !password}
+              >
+                Sign In
+                {loading && (
+                  <CircularProgress
+                    size={20}
+                    thickness={6}
+                    className={styles.progress}
+                  />
+                )}
+              </Button>
+            </Grid>
+            {error && (
+              <Grid item xs={12}>
+                <Typography variant="body2" className={styles.error}>
+                  {error}
+                </Typography>
+              </Grid>
+            )}
+            <Grid item xs={12}>
+              <Link href="signup" variant="body2" className={styles.link}>
+                {"Don't have an account? Sign Up"}
+              </Link>
+            </Grid>
+          </Grid>
         </form>
       </Container>
     </Paper>

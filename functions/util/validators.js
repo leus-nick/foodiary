@@ -31,7 +31,9 @@ exports.validateSignUpData = (data) => {
   if (data.password !== data.confirmPassword)
     errors.confirmPassword = "Passowrds must be the same";
   if (isEmpty(data.username)) errors.username = "Must not be empty";
-  if (isEmpty(data.goal)) errors.username = "Must not be empty";
+  if (isEmpty(data.goal)) errors.goal = "Must not be empty";
+  if (data.goal < 1200 && data.goal > 8000)
+    errors.goal = "Choose your goal berween 1200 and 8000 ccal.";
   return {
     errors,
     valid: Object.keys(errors).length === 0 ? true : false,

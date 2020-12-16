@@ -4,7 +4,6 @@ import { Diary } from "../Diary";
 import { Goal } from "../Goal";
 import { authMiddleWare } from "../../util/auth";
 import axios from "axios";
-import styles from "./Home.module.css";
 
 const dishContext = React.createContext(null);
 
@@ -46,7 +45,7 @@ const Home = (props) => {
       <dishContext.Provider value={dishItems}>
         <Header logout={logoutHandler} />
         <Goal />
-        <main className={styles.main}>
+        <main>
           <Diary />
         </main>
       </dishContext.Provider>
