@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { TextField, Button, Typography } from "@material-ui/core";
+import { Container, TextField, Button, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
 
@@ -11,6 +11,35 @@ const useStyles = makeStyles({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+  },
+  inner: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  input: {
+    margin: "0 20px",
+    width: "100px",
+    "& .MuiInputBase-root": {
+      "&:before": { border: "none" },
+      "& input": {
+        appearance: "textfield",
+        textAlign: "center",
+        fontFamily: "Roboto Slab,serif",
+        fontWeight: "700",
+        lineHeight: "1.2",
+        fontSize: "2.2rem",
+        "&::-webkit-outer-spin-button, &::-webkit-inner-spin-button": {
+          appearance: "none",
+        },
+      },
+    },
+    "& .MuiInput-underline:hover:before": {
+      border: "none",
+    },
+    "& .MuiInput-underline:after": {
+      border: "none",
+    },
   },
   goal: {
     cursor: "pointer",
@@ -65,26 +94,24 @@ const Goal = () => {
   return (
     <div className={styles.container}>
       {edit ? (
-        <>
+        <Container maxWidth="xs" className={styles.inner}>
           <TextField
             error={goalError ? true : false}
             id="goalInput"
             type="number"
             defaultValue={userGoal}
             helperText={goalError}
-            InputLabelProps={{
-              shrink: true,
-            }}
+            className={styles.input}
+            autoFocus
             onChange={handleGoalInputChange}
           />
           <Button
-            variant="contained"
             onClick={handleGoalSubmit}
             disabled={goalError ? true : false}
           >
-            set
+            save
           </Button>
-        </>
+        </Container>
       ) : (
         <Typography
           variant="h2"
