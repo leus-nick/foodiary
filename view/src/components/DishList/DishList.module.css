@@ -1,4 +1,6 @@
 .dishList {
   flex-basis: 50%;
   transition: all 0.5s ease-in-out;
+  max-height: calc(100% - 10px);
+  overflow-y: scroll;
 }

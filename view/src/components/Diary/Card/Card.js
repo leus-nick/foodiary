@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Card,
   CardHeader,
@@ -7,53 +8,88 @@ import {
   IconButton,
 } from "@material-ui/core";
 import { Delete, Add, Clear } from "@material-ui/icons";
-import styles from "./Card.module.css";
+import { makeStyles } from "@material-ui/core/styles";
 
-const DishCard = ({ card, goal, deleteCard, expandMenu, deleteFromCard }) => {
-  console.log("render card");
-  let { day, dishes, id } = card;
+const useStyles = makeStyles({
+  card: {
+    flexBasis: "16.666%",
+  },
+  noneCard: {
+    display: "none",
+  },
+  expandedCard: {
+    flexBasis: "100%",
+  },
+});
+
+const DishCard = ({
+  card,
+  deleteCard,
+  deleteFromCard,
+  expandCard,
+  expanded,
+}) => {
+  const styles = useStyles();
+  const [fullCard, setFullCard] = useState(null);
+  let { day, dishes, id, goal } = card;
   let calories = 0;
 
   return (
-    <div className={styles.card}>
-      <Card className={styles.cardInner} elevation={3}>
-        <CardHeader title={day} />
-        <CardContent>
-          {dishes.map((dish, i) => {
-            calories += dish.calories;
-            return (
-              <div key={i}>
-                <Typography variant="h6" color="textSecondary" component="p">
-                  {dish.title}
-                </Typography>
-                <IconButton
-                  onClick={() => deleteFromCard(dish.id, id)}
-                  aria-label="delete dish"
-                >
-                  <Clear />
-                </IconButton>
-              </div>
-            );
-          })}
-          <Typography variant="h6" color="textSecondary" component="p">
-            Total calories: {`${calories} / ${goal}`}
-          </Typography>
-        </CardContent>
-        <CardActions className="actions">
-          <IconButton
-            aria-label="add new dish to card"
-            onClick={() => {
-              expandMenu(id);
-            }}
-          >
-            <Add />
-          </IconButton>
-          <IconButton aria-label="delete card" onClick={() => deleteCard(id)}>
-            <Delete />
-          </IconButton>
-        </CardActions>
-      </Card>
-    </div>
+    <Card
+      elevation={3}
+      className={
+        expanded
+          ? fullCard === card.id
+            ? styles.expandedCard
+            : styles.noneCard
+          : styles.card
+      }
+    >
+      <CardHeader title={day} />
+      <CardContent>
+        {dishes.map((dish, i) => {
+          calories += dish.calories;
+          if (calories >= goal) {
+            alert("You rich your goal for today.");
+          }
+
+          return (
+            <div key={i}>
+              <Typography variant="h6" color="textSecondary" component="p">
+                {dish.title}
+              </Typography>
+              <IconButton
+                onClick={() => deleteFromCard(dish.id, id)}
+                aria-label="delete dish"
+              >
+                <Clear />
+              </IconButton>
+            </div>
+          );
+        })}
+        <Typography variant="h6" color="textSecondary" component="p">
+          Total calories: {`${calories} / ${goal}`}
+        </Typography>
+      </CardContent>
+      <CardActions>
+        <IconButton
+          aria-label="add to card"
+          onClick={() => {
+            expandCard(id);
+            if (!expanded) {
+              setFullCard(id);
+            } else {
+              setFullCard("");
+            }
+          }}
+        >
+          <Add />
+        </IconButton>
+        <IconButton aria-label="delete card" onClick={() => deleteCard(id)}>
+          <Delete />
+        </IconButton>
+      </CardActions>
+    </Card>
   );
 };
 

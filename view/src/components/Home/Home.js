@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Header } from "../Header";
 import { Diary } from "../Diary";
-import { Goal } from "../Goal";
 import { authMiddleWare } from "../../util/auth";
 import axios from "axios";
 
@@ -9,8 +8,9 @@ const dishContext = React.createContext(null);
 
 const Home = (props) => {
   const [dishItems, setDishItems] = useState([]);
-  console.log(`render Home`);
   authMiddleWare(props.history);
+  const authToken = localStorage.getItem("AuthToken");
+  axios.defaults.headers.common = { Authorization: `${authToken}` };
 
   useEffect(() => {
     let dishes = JSON.parse(localStorage.getItem("DishMenuItems"));
@@ -44,10 +44,7 @@ const Home = (props) => {
     <>
       <dishContext.Provider value={dishItems}>
         <Header logout={logoutHandler} />
-        <Goal />
-        <main>
-          <Diary />
-        </main>
+        <Diary />
       </dishContext.Provider>
     </>
   );
