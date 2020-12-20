@@ -1,10 +1,15 @@
 import { Card, ButtonBase } from "@material-ui/core";
 import { Add } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
-import styles from "./AddCard.module.css";
 
 const useStyles = makeStyles(() => ({
-  root: {
+  container: {
+    flexBasis: "16.666%",
+  },
+  noneContainer: {
+    display: "none",
+  },
+  base: {
     width: "100%",
     height: "100%",
   },
@@ -18,20 +23,22 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const AddCard = ({ handleClick }) => {
-  const classes = useStyles();
+const AddCard = ({ handleClick, expanded }) => {
+  const styles = useStyles();
   console.log("render AddCard");
   return (
-    <div className={styles.addCard}>
-      <Card className={styles.addCardInner} onClick={handleClick} elevation={3}>
-        <ButtonBase
-          classes={{ root: classes.root }}
-          TouchRippleProps={{ classes: { root: classes.rippleVisible } }}
-        >
-          <Add classes={{ root: classes.icon }} />
-        </ButtonBase>
-      </Card>
-    </div>
+    <Card
+      className={expanded ? styles.noneContainer : styles.container}
+      onClick={handleClick}
+      elevation={3}
+    >
+      <ButtonBase
+        className={styles.base}
+        TouchRippleProps={{ classes: { root: styles.rippleVisible } }}
+      >
+        <Add className={styles.icon} />
+      </ButtonBase>
+    </Card>
   );
 };
 

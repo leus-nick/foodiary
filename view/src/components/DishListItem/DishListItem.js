@@ -9,9 +9,33 @@ import {
   IconButton,
 } from "@material-ui/core";
 import { ExpandMore, Add } from "@material-ui/icons";
-import styles from "./DishListItem.module.css";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles({
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    padding: "10px",
+    marginBottom: "10px",
+  },
+  inner: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  content: {
+    display: "flex",
+    alignItems: "center",
+  },
+  image: {
+    width: "100px",
+    height: "100px",
+    borderRadius: "50%",
+  },
+});
 
 const DishListItem = ({ dish, addToCard }) => {
+  const styles = useStyles();
   const { image, title } = dish;
   const [expanded, setExpanded] = useState(false);
 
@@ -20,15 +44,11 @@ const DishListItem = ({ dish, addToCard }) => {
   };
 
   return (
-    <Card className={styles.dishListItem} elevation={3}>
-      <div className={styles.itemInner}>
-        <div className={styles.itemInnerContent}>
+    <Card className={styles.container} elevation={3} square="true">
+      <div className={styles.inner}>
+        <div className={styles.content}>
           {image ? (
-            <CardMedia
-              className={styles.dishListItemImage}
-              image={image}
-              title={title}
-            />
+            <CardMedia className={styles.image} image={image} title={title} />
           ) : null}
           <CardContent>
             <Typography variant="body2" color="textSecondary" component="p">

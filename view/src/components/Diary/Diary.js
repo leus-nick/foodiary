@@ -23,13 +23,18 @@ const useStyles = makeStyles({
     },
   },
   cards: {
-    backgroundColor: "yellowgreen",
     display: "flex",
     flexFlow: "row wrap",
     justifyContent: "flex-start",
-    padding: "10px",
-    flexBasis: "50%",
+    flexBasis: "100%",
     maxHeight: "calc(100vh - 150px)",
+  },
+  expandedCards: {
+    display: "flex",
+    flexFlow: "row wrap",
+    justifyContent: "flex-start",
+    flexBasis: "50%",
+    maxHeight: "calc(100vh - 150px)", 
   },
 });
 
@@ -192,6 +197,7 @@ const Diary = () => {
     setCards((cards) => (cards = { ...result }));
   };
 
+  // Check this function for errors
   const handleAddToCardClick = (dish) => {
     let changed = false;
     setSum(sum + dish.calories);
@@ -269,8 +275,8 @@ const Diary = () => {
         changeGoal={handleGoalChange}
       />
       <div className={styles.inner}>
-        <div className={styles.cards}>
-          <AddCard handleClick={handleAddCardClick} />
+        <div className={showMenu ? styles.expandedCards : styles.cards}>
+          <AddCard expanded={showMenu} handleClick={handleAddCardClick} />
           {Object.values(cards)
             .reverse()
             .map((card) => {

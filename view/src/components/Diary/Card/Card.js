@@ -37,6 +37,7 @@ const DishCard = ({
   return (
     <Card
       elevation={3}
+      square="true"
       className={
         expanded
           ? fullCard === card.id
