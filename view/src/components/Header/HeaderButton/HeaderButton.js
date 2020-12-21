@@ -13,7 +13,6 @@ const useStyles = makeStyles(() => ({
 }));
 
 const HeaderButton = ({ logout }) => {
-  console.log("render HeaderButton");
   const styles = useStyles();
 
   return <ExitToApp className={styles.icon} onClick={logout} />;

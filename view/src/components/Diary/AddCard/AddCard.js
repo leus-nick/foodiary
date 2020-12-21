@@ -5,6 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles(() => ({
   container: {
     flexBasis: "16.666%",
+    marginRight: "10px",
   },
   noneContainer: {
     display: "none",
@@ -25,12 +26,12 @@ const useStyles = makeStyles(() => ({
 
 const AddCard = ({ handleClick, expanded }) => {
   const styles = useStyles();
-  console.log("render AddCard");
   return (
     <Card
       className={expanded ? styles.noneContainer : styles.container}
       onClick={handleClick}
       elevation={3}
+      square={true}
     >
       <ButtonBase
         className={styles.base}

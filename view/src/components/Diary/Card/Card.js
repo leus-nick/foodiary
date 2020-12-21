@@ -2,6 +2,7 @@ import { useState } from "react";
 import {
   Card,
   CardHeader,
+  CardMedia,
   CardContent,
   CardActions,
   Typography,
@@ -13,12 +14,19 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles({
   card: {
     flexBasis: "16.666%",
+    marginRight: "10px",
+    "&:last-child": {
+      marginRight: "0px",
+    },
   },
   noneCard: {
     display: "none",
   },
   expandedCard: {
     flexBasis: "100%",
+  },
+  media: {
+    height: "140px",
   },
 });
 
@@ -36,8 +44,8 @@ const DishCard = ({
 
   return (
     <Card
-      elevation={3}
-      square="true"
+      elevation={2}
+      square={true}
       className={
         expanded
           ? fullCard === card.id
@@ -47,6 +55,13 @@ const DishCard = ({
       }
     >
       <CardHeader title={day} />
+      {dishes.length > 0 ? (
+        <CardMedia
+          className={styles.media}
+          image={dishes[0].image}
+          title={dishes[0].title}
+        />
+      ) : null}
       <CardContent>
         {dishes.map((dish, i) => {
           calories += dish.calories;

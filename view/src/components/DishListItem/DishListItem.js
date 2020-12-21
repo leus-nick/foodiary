@@ -16,7 +16,7 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
     padding: "10px",
-    marginBottom: "10px",
+    borderBottom: "1px solid #e0e3e6",
   },
   inner: {
     display: "flex",
@@ -36,7 +36,7 @@ const useStyles = makeStyles({
 
 const DishListItem = ({ dish, addToCard }) => {
   const styles = useStyles();
-  const { image, title } = dish;
+  const { image, title, id } = dish;
   const [expanded, setExpanded] = useState(false);
 
   const handleExpandClick = () => {
@@ -44,7 +44,7 @@ const DishListItem = ({ dish, addToCard }) => {
   };
 
   return (
-    <Card className={styles.container} elevation={3} square="true">
+    <Card className={styles.container} elevation={3} square={true}>
       <div className={styles.inner}>
         <div className={styles.content}>
           {image ? (
@@ -62,7 +62,8 @@ const DishListItem = ({ dish, addToCard }) => {
               addToCard({
                 title: title,
                 calories: dish.nutrition.nutrients[0].amount,
-                id: dish.id,
+                id: id,
+                image: image,
               })
             }
             aria-label="add to card"
@@ -80,9 +81,7 @@ const DishListItem = ({ dish, addToCard }) => {
       </div>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>
-            {/* {instructions.replace(/(<([^>]+)>)/gi, "")} */}
-          </Typography>
+          <Typography>{dish.summary.replace(/(<([^>]+)>)/gi, "")}</Typography>
         </CardContent>
       </Collapse>
     </Card>
