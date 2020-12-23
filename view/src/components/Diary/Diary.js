@@ -12,12 +12,14 @@ const useStyles = makeStyles({
   container: {
     display: "flex",
     flexDirection: "column",
+    paddingBottom: "24px",
+    flexWrap: "wrap",
   },
   inner: {
     display: "flex",
     flexGrow: "1",
     width: "100%",
-    maxHeight: "calc(100vh - 140px)",
+    maxHeight: "calc(100vh - 164px)",
     "@media (min-width:1980px)": {
       maxWidth: "1800px",
     },
@@ -34,7 +36,7 @@ const useStyles = makeStyles({
     flexFlow: "row wrap",
     justifyContent: "flex-start",
     flexBasis: "50%",
-    maxHeight: "calc(100vh - 150px)", 
+    maxHeight: "calc(100vh - 150px)",
   },
 });
 
@@ -182,6 +184,10 @@ const Diary = () => {
 
   const handleDeleteCardClick = (deletedId) => {
     let result = Object.values(cards).filter((card) => {
+      if (showMenu) {
+        setShowMenu(false);
+        setExpandedCard("");
+      }
       return card.id !== deletedId;
     });
     axios
