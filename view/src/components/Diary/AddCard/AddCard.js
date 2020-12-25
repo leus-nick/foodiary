@@ -6,6 +6,16 @@ const useStyles = makeStyles(() => ({
   container: {
     flexBasis: "20%",
     padding: "7px",
+    minHeight: "100%",
+    "@media (max-width:1450px)": {
+      flexBasis: "33.333%",
+    },
+    "@media (max-width:960px)": {
+      flexBasis: "50%",
+    },
+    "@media (max-width:650px)": {
+      flexBasis: "100%",
+    },
   },
   noneContainer: {
     display: "none",

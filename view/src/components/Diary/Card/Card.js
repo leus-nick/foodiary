@@ -18,13 +18,14 @@ const useStyles = makeStyles({
     flexBasis: "20%",
     padding: "7px",
     minHeight: "100%",
-    "&:hover": {
-      "& .MuiCardMedia-root": {
-        height: "250px",
-        opacity: "1",
-        maskImage:
-          "linear-gradient(180deg, transparent 0%, black 10%, black 90%, transparent 100%);",
-      },
+    "@media (max-width:1450px)": {
+      flexBasis: "33.333%",
+    },
+    "@media (max-width:960px)": {
+      flexBasis: "50%",
+    },
+    "@media (max-width:650px)": {
+      flexBasis: "100%",
     },
   },
   noneContainer: {
@@ -35,12 +36,13 @@ const useStyles = makeStyles({
     minHeight: "100%",
   },
   card: {
-    padding: "10% 0px",
+    paddingBottom: "10%",
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
     alignItems: "center",
     minHeight: "100%",
+    background: "linear-gradient(0deg, #8ae2af 0%, rgba(255,255,255,1) 35%)",
   },
   expandedCard: {
     display: "flex",
@@ -49,19 +51,24 @@ const useStyles = makeStyles({
     padding: "14px",
   },
   cardImage: {
-    height: "0px",
+    height: "350px",
     width: "100%",
-    opacity: "0",
-    maskImage:
-      "linear-gradient(180deg, transparent 0%, black 10%, black 90%, transparent 100%);",
-    transition: "opacity 1s ease-in-out, height .5s ease-in-out",
+    maskImage: "linear-gradient(180deg, black 50%, transparent 100%)",
+  },
+  cardImageHolder: {
+    height: "350px",
+    width: "100%",
   },
   cardTitle: {
     textAlign: "center",
     padding: "30px 5px",
   },
   cardContent: {
+    flex: "1",
+    display: "flex",
+    flexDirection: "column",
     padding: "0px",
+    alignItems: "center",
   },
   cardItem: {
     display: "flex",
@@ -74,9 +81,11 @@ const useStyles = makeStyles({
   cardFunc: {
     display: "flex",
     flexDirection: "column",
+    justifySelf: "flex-end",
   },
   cardCalories: {
     padding: "10px 0px",
+    // color: "white",
   },
   cardButton: {
     fontFamily: ["Alegreya Sans", "serif"].join(","),
@@ -84,6 +93,7 @@ const useStyles = makeStyles({
     width: "100px",
     padding: "5px 20px",
     transition: "all .5s ease-in-out",
+    // color: "white",
     "&:hover": {
       color: "white",
       backgroundColor: "#58d68d",
@@ -124,6 +134,7 @@ const DishCard = ({
     });
     return Math.round(calories);
   };
+
   return (
     <div
       className={
@@ -139,27 +150,28 @@ const DishCard = ({
         square={true}
         className={expanded ? styles.expandedCard : styles.card}
       >
-        <CardHeader title={day} />
-
-        <CardContent className={styles.cardContent}>
-          {!expanded && dishes.length > 0 ? (
+        {dishes.length > 0 ? (
+          !expanded ? (
             <CardMedia
               className={styles.cardImage}
               image={dishes[0].image}
               title={dishes[0].title}
             />
-          ) : null}
+          ) : null
+        ) : (
+          <div className={styles.cardImageHolder} />
+        )}
+        <CardHeader title={day} className={styles.cardDay} />
+        <CardContent className={styles.cardContent}>
           {!expanded ? (
-            <div>
-              <Typography
-                variant="h6"
-                color="textSecondary"
-                component="p"
-                className={styles.cardTitle}
-              >
-                {formatCardTitle(dishes)}
-              </Typography>
-            </div>
+            <Typography
+              variant="h6"
+              color="textSecondary"
+              component="p"
+              className={styles.cardTitle}
+            >
+              {formatCardTitle(dishes)}
+            </Typography>
           ) : (
             dishes.map((dish, i) => {
               return (

@@ -24,6 +24,13 @@ const theme = createMuiTheme({
         fontSize: "2.2rem",
       },
     },
+    h5: {
+      fontWeight: "700",
+      fontSize: "1.2rem",
+      "@media (min-width:960px)": {
+        fontSize: "1.6rem",
+      },
+    },
   },
 });
 
