@@ -29,14 +29,14 @@ const useStyles = makeStyles({
     flexFlow: "row wrap",
     justifyContent: "flex-start",
     flexBasis: "100%",
-    maxHeight: "calc(100vh - 150px)",
+    maxHeight: "calc(100vh - 164px)",
   },
   expandedCards: {
     display: "flex",
     flexFlow: "row wrap",
     justifyContent: "flex-start",
     flexBasis: "50%",
-    maxHeight: "calc(100vh - 150px)",
+    maxHeight: "calc(100vh - 164px)",
   },
 });
 
