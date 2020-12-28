@@ -27,7 +27,7 @@ const useStyles = makeStyles({
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
     backgroundPosition: "center center",
-    "@media (max-width:1280px)": {
+    "@media (max-width:1450px)": {
       margin: "0px auto",
       minHeight: "100vh",
     },
