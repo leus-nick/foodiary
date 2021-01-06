@@ -17,17 +17,18 @@ const useStyles = makeStyles({
     alignItems: "center",
   },
   input: {
-    margin: "0 20px",
-    width: "100px",
+    maxWidth: "150px",
     "& .MuiInputBase-root": {
       "&:before": { border: "none" },
       "& input": {
         appearance: "textfield",
         textAlign: "center",
-        fontFamily: "Roboto Slab,serif",
         fontWeight: "700",
         lineHeight: "1.2",
-        fontSize: "2.2rem",
+        fontSize: "3rem",
+        "@media (max-width:960px)": {
+          fontSize: "2rem",
+        },
         "&::-webkit-outer-spin-button, &::-webkit-inner-spin-button": {
           appearance: "none",
         },
@@ -42,6 +43,27 @@ const useStyles = makeStyles({
   },
   goal: {
     cursor: "pointer",
+    fontSize: "3rem",
+    fontWeight: "700",
+    "@media (max-width:960px)": {
+      fontSize: "2rem",
+    },
+  },
+  goalButton: {
+    fontSize: "1rem",
+    borderColor: "#58d68d",
+    width: "100px",
+    padding: "5px 20px",
+    transition: "all .4s ease-in-out",
+    "&:hover": {
+      color: "white",
+      backgroundColor: "#58d68d",
+      borderRadius: "0px",
+    },
+    "@media (max-width:960px)": {
+      fontSize: "0.8rem",
+      padding: "5px 40px",
+    },
   },
 });
 
@@ -49,7 +71,6 @@ const Goal = ({ goal, submitGoal, changeGoal }) => {
   const styles = useStyles();
   const [edit, setEdit] = useState(false);
   const [goalError, setGoalError] = useState("");
-
 
   const handleGoalChange = (e) => {
     e.target.value
@@ -77,7 +98,9 @@ const Goal = ({ goal, submitGoal, changeGoal }) => {
               submitGoal();
               setEdit(false);
             }}
+            variant="outlined"
             disabled={goalError ? true : false}
+            className={styles.goalButton}
           >
             save
           </Button>

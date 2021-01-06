@@ -50,6 +50,13 @@ const useStyles = makeStyles({
   avatar: {
     backgroundColor: "#58d68d",
   },
+  signTitle: {
+    fontSize: "4.5rem",
+    "@media (max-width:960px)": {
+      fontSize: "2rem",
+      marginTop: "8px",
+    },
+  },
   form: {
     marginTop: "20px",
     width: "100%",
@@ -131,7 +138,7 @@ const Signup = (props) => {
         <Avatar className={styles.avatar}>
           <LockOutlined />
         </Avatar>
-        <Typography component="h1" variant="h1">
+        <Typography variant="h1" className={styles.signTitle}>
           Sign up
         </Typography>
         <form noValidate className={styles.form}>

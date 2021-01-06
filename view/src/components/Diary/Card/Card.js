@@ -2,7 +2,6 @@ import { useState } from "react";
 import {
   Avatar,
   Card,
-  CardHeader,
   CardMedia,
   CardContent,
   CardActions,
@@ -29,27 +28,64 @@ const useStyles = makeStyles({
       flexBasis: "100%",
     },
   },
-  expandedContainer: {
-    flexBasis: "100%",
-    minHeight: "100%",
-  },
-  noneContainer: {
-    display: "none",
-  },
   card: {
     height: "100%",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    paddingBottom: "3%",
     background: "linear-gradient(0deg, #8ae2af 0%, rgba(255,255,255,1) 25%)",
+    "@media (max-width:960px)": {
+      background: "linear-gradient(0deg, #8ae2af 0%, rgba(255,255,255,1) 35%)",
+    },
   },
-  expandedCard: {
-    background: "white",
+  cardImage: {
+    flex: "1",
+    width: "100%",
+    maskImage: "linear-gradient(180deg, black 70%, transparent 100%)",
+  },
+  cardImageHolder: {
+    flex: "1",
+  },
+  cardDay: {
+    fontSize: "2rem",
+    fontWeight: "700",
+    padding: "20px 0",
+    "@media (max-width:960px)": {
+      fontSize: "1.6rem",
+      padding: "10px 0",
+    },
   },
   cardContent: {
     width: "100%",
     flexBasis: "85px",
+  },
+  cardTitle: {
+    textAlign: "center",
+    fontSize: "1.2rem",
+    "@media (max-width:960px)": {
+      fontSize: "1rem",
+    },
+  },
+  cardActions: {
+    display: "flex",
+    flexDirection: "column",
+  },
+  cardButton: {
+    width: "100px",
+    padding: "5px 20px",
+    transition: "all .4s ease-in-out",
+    "&:hover": {
+      color: "white",
+      backgroundColor: "#58d68d",
+      borderRadius: "0px",
+    },
+  },
+  expandedContainer: {
+    flexBasis: "100%",
+    minHeight: "100%",
+  },
+  expandedCard: {
+    background: "white",
   },
   expandedCardContent: {
     flex: "1",
@@ -66,31 +102,8 @@ const useStyles = makeStyles({
       marginLeft: "15px",
     },
   },
-  cardTitle: {
-    textAlign: "center",
-    fontSize: "1rem",
-  },
-  cardImage: {
-    flex: "1",
-    width: "100%",
-    maskImage: "linear-gradient(180deg, black 70%, transparent 100%)",
-  },
-  cardImageHolder: {
-    flex: "1",
-  },
-  cardActions: {
-    display: "flex",
-    flexDirection: "column",
-  },
-  cardButton: {
-    width: "100px",
-    padding: "5px 20px",
-    transition: "all .4s ease-in-out",
-    "&:hover": {
-      color: "white",
-      backgroundColor: "#58d68d",
-      borderRadius: "0px",
-    },
+  noneContainer: {
+    display: "none",
   },
 });
 
@@ -153,7 +166,9 @@ const DishCard = ({
         ) : (
           <div className={styles.cardImageHolder} />
         )}
-        <CardHeader title={day} className={styles.cardDay} />
+        <Typography variant="h2" className={styles.cardDay}>
+          {day}
+        </Typography>
         <CardContent className={`${styles.cardContent} ${expandedCardContant}`}>
           {!expanded ? (
             <Typography

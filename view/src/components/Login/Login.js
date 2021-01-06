@@ -50,6 +50,13 @@ const useStyles = makeStyles({
   avatar: {
     backgroundColor: "#58d68d",
   },
+  loginTitle: {
+    fontSize: "4.5rem",
+    "@media (max-width:960px)": {
+      fontSize: "2rem",
+      marginTop: "8px",
+    },
+  },
   form: {
     marginTop: "20px",
     width: "100%",
@@ -130,7 +137,9 @@ const Login = (props) => {
         <Avatar className={styles.avatar}>
           <LockOutlined />
         </Avatar>
-        <Typography variant="h1">Login</Typography>
+        <Typography variant="h1" className={styles.loginTitle}>
+          Login
+        </Typography>
         <form noValidate className={styles.form}>
           <Grid container spacing={2} direction="column" justify="center">
             <Grid item xs={12}>

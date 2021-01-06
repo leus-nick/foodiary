@@ -16,6 +16,11 @@ const useStyles = makeStyles({
   },
   link: {
     color: "#85929e",
+    fontSize: "3rem",
+    fontWeight: "700",
+    "@media (max-width:960px)": {
+      fontSize: "2rem",
+    },
     "& span": {
       color: "#58d68d",
     },
