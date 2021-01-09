@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { DishList } from "../DishList";
 import { AddCard } from "./AddCard";
-import { DishCard } from "./Card";
+import { MobileList } from "../MobileDishList";
+import { DiaryItem } from "./DiaryItem";
 import { Goal } from "../Goal";
 import { v4 as uuidv4 } from "uuid";
 import { Container } from "@material-ui/core";
@@ -20,8 +21,12 @@ const useStyles = makeStyles({
     flexGrow: "1",
     width: "100%",
     maxHeight: "calc(100vh - 164px)",
+    justifyContent: "flex-start",
     "@media (min-width:1980px)": {
       maxWidth: "1800px",
+    },
+    "@media (max-width:960px)": {
+      justifyContent: "center",
     },
   },
   cards: {
@@ -37,6 +42,12 @@ const useStyles = makeStyles({
     justifyContent: "flex-start",
     flexBasis: "50%",
     maxHeight: "calc(100vh - 164px)",
+    "@media (max-width:960px)": {
+      flexBasis: "100%",
+    },
+  },
+  noDisplay: {
+    display: "none",
   },
 });
 
@@ -45,6 +56,7 @@ const Diary = () => {
   const [cards, setCards] = useState({});
   const [userGoal, setUserGoal] = useState(0);
   const [showMenu, setShowMenu] = useState(false);
+  const [mobileMenu, setMobileMenu] = useState(false);
   const [expandedCard, setExpandedCard] = useState("");
   const [sum, setSum] = useState(0);
 
@@ -273,6 +285,12 @@ const Diary = () => {
     }
   };
 
+  const handleShowMenu = () => {
+    if (!mobileMenu) {
+      setMobileMenu(true);
+    } else setMobileMenu(false);
+  };
+
   return (
     <Container component="main" maxWidth="xl" className={styles.container}>
       <Goal
@@ -281,24 +299,44 @@ const Diary = () => {
         changeGoal={handleGoalChange}
       />
       <div className={styles.inner}>
-        <div className={showMenu ? styles.expandedCards : styles.cards}>
+        <div
+          className={
+            showMenu
+              ? `${styles.expandedCards} ${mobileMenu ? styles.noDisplay : ""}`
+              : styles.cards
+          }
+        >
           <AddCard expanded={showMenu} handleClick={handleAddCardClick} />
           {Object.values(cards)
             .reverse()
             .map((card) => {
               return (
-                <DishCard
+                <DiaryItem
+                  menu={mobileMenu}
                   key={card.id}
                   card={card}
                   deleteCard={handleDeleteCardClick}
                   deleteFromCard={handleDeleteDishClick}
                   expandCard={handleExtendCard}
+                  showMenu={handleShowMenu}
                   expanded={showMenu}
                 />
               );
             })}
         </div>
-        {showMenu ? <DishList addToCard={handleAddToCardClick} /> : null}
+        {showMenu ? (
+          !mobileMenu ? (
+            <DishList
+              addToCard={handleAddToCardClick}
+              showMenu={handleShowMenu}
+            />
+          ) : (
+            <MobileList
+              addToCard={handleAddToCardClick}
+              showMenu={handleShowMenu}
+            />
+          )
+        ) : null}
       </div>
     </Container>
   );

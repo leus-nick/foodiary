@@ -44,7 +44,7 @@ const AddCard = ({ handleClick, expanded }) => {
     <div className={expanded ? styles.noneContainer : styles.container}>
       <Card
         onClick={handleClick}
-        elevation={3}
+        elevation={2}
         square={true}
         className={styles.card}
       >

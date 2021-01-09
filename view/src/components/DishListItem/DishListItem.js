@@ -15,7 +15,6 @@ const useStyles = makeStyles({
   container: {
     display: "flex",
     flexDirection: "column",
-    padding: "10px",
     borderBottom: "1px solid #e0e3e6",
   },
   inner: {
@@ -24,13 +23,23 @@ const useStyles = makeStyles({
     alignItems: "center",
   },
   content: {
+    flex: "1",
     display: "flex",
     alignItems: "center",
+  },
+  title: {
+    marginLeft: "10px",
+    fontSize: "1rem",
+    "@media (max-width:960px)": {
+      fontSize: "0.9rem",
+    },
+    flex: "1",
   },
   image: {
     width: "100px",
     height: "100px",
     borderRadius: "50%",
+    flex: "0 0 100px",
   },
 });
 
@@ -44,18 +53,22 @@ const DishListItem = ({ dish, addToCard }) => {
   };
 
   return (
-    <Card className={styles.container} elevation={3} square={true}>
+    <Card className={styles.container} elevation={0} square={true}>
       <div className={styles.inner}>
-        <div className={styles.content}>
+        <CardContent className={styles.content}>
           {image ? (
             <CardMedia className={styles.image} image={image} title={title} />
           ) : null}
-          <CardContent>
-            <Typography variant="body2" color="textSecondary" component="p">
-              {title}
-            </Typography>
-          </CardContent>
-        </div>
+          <Typography
+            className={styles.title}
+            variant="body2"
+            color="textSecondary"
+            component="p"
+          >
+            {title}
+          </Typography>
+        </CardContent>
+
         <CardActions disableSpacing>
           <IconButton
             onClick={() =>

@@ -75,7 +75,6 @@ const useStyles = makeStyles({
     },
   },
   button: {
-    fontFamily: ["Alegreya Sans", "serif"].join(","),
     fontSize: "1rem",
     backgroundColor: "#58d68d",
     padding: "10px 0px",
@@ -87,8 +86,7 @@ const useStyles = makeStyles({
     color: "#58d68d",
   },
   link: {
-    fontFamily: ["Alegreya Sans", "serif"].join(","),
-    fontSize: "1rem",
+    fontSize: "0.8rem",
     color: "black",
     "&:hover": {
       color: "#85929e",
