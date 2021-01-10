@@ -132,8 +132,10 @@ const Diary = () => {
       date.getDate() === today.getDate() &&
       date.getMonth() === today.getMonth() &&
       date.getYear() === today.getYear()
-    )
+    ) {
       return true;
+    }
+
     return false;
   };
 
@@ -160,38 +162,48 @@ const Diary = () => {
   };
 
   const handleAddCardClick = () => {
-    axios
-      .post("/user", {
-        cards: {
-          ...cards,
-          [`card ${uuidv4()}`]: {
-            day: formatDay(new Date()),
-            dishes: [],
-            id: uuidv4(),
-            date: new Date(),
-            goal: userGoal,
-          },
-        },
-      })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    setCards(
-      (cards) =>
-        (cards = {
-          ...cards,
-          [`card ${uuidv4()}`]: {
-            day: formatDay(new Date()),
-            dishes: [],
-            id: uuidv4(),
-            date: new Date(),
-            goal: userGoal,
+    let dateCheck;
+
+    Object.values(cards).map((card) => {
+      dateCheck = dateCheker(card) && !dateCheck ? true : false;
+    });
+
+    if (dateCheck) {
+      alert("You already have one card for today");
+    } else {
+      axios
+        .post("/user", {
+          cards: {
+            ...cards,
+            [`card ${uuidv4()}`]: {
+              day: formatDay(new Date()),
+              dishes: [],
+              id: uuidv4(),
+              date: new Date(),
+              goal: userGoal,
+            },
           },
         })
-    );
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      setCards(
+        (cards) =>
+          (cards = {
+            ...cards,
+            [`card ${uuidv4()}`]: {
+              day: formatDay(new Date()),
+              dishes: [],
+              id: uuidv4(),
+              date: new Date(),
+              goal: userGoal,
+            },
+          })
+      );
+    }
   };
 
   const handleDeleteCardClick = (deletedId) => {
@@ -215,23 +227,31 @@ const Diary = () => {
     setCards((cards) => (cards = { ...result }));
   };
 
-  // Check this function for errors
   const handleAddToCardClick = (dish) => {
     let changed = false;
-    setSum(sum + dish.calories);
-    if (sum > userGoal) {
+    let sum = 0;
+
+    Object.values(cards).map((card) => {
+      if (card.id === expandedCard) {
+        console.log(card.day);
+        card.dishes.map((innerDish) => {
+          sum += innerDish.calories;
+        });
+        sum += dish.calories;
+        return card;
+      }
+      return card;
+    });
+
+    if (Math.round(sum) > userGoal) {
       alert("This dish have much more calories than your goal");
       return;
     }
 
     let result = Object.values(cards).map((card) => {
       if (card.id === expandedCard) {
-        if (dish && sum <= userGoal) {
-          card.dishes.push(dish);
-          changed = true;
-        } else {
-          alert("You rich your goal for today.");
-        }
+        card.dishes.push(dish);
+        changed = true;
       }
       return card;
     });
@@ -306,7 +326,7 @@ const Diary = () => {
               : styles.cards
           }
         >
-          <AddCard expanded={showMenu} handleClick={handleAddCardClick} />
+          <AddCard expanded={showMenu} handleClick={handleAddCardClick} F />
           {Object.values(cards)
             .reverse()
             .map((card) => {

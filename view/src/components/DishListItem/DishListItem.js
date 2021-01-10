@@ -10,6 +10,7 @@ import {
 } from "@material-ui/core";
 import { ExpandMore, Add } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
+import { v4 as uuidv4 } from "uuid";
 
 const useStyles = makeStyles({
   container: {
@@ -45,7 +46,7 @@ const useStyles = makeStyles({
 
 const DishListItem = ({ dish, addToCard }) => {
   const styles = useStyles();
-  const { image, title, id } = dish;
+  const { image, title } = dish;
   const [expanded, setExpanded] = useState(false);
 
   const handleExpandClick = () => {
@@ -75,7 +76,7 @@ const DishListItem = ({ dish, addToCard }) => {
               addToCard({
                 title: title,
                 calories: dish.nutrition.nutrients[0].amount,
-                id: id,
+                id: uuidv4(),
                 image: image,
               })
             }

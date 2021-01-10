@@ -38,9 +38,9 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const AddCard = ({ handleClick, expanded }) => {
+const AddCard = ({ handleClick, expanded, check }) => {
   const styles = useStyles();
-  return (
+  return !check ? (
     <div className={expanded ? styles.noneContainer : styles.container}>
       <Card
         onClick={handleClick}
@@ -56,7 +56,7 @@ const AddCard = ({ handleClick, expanded }) => {
         </ButtonBase>
       </Card>
     </div>
-  );
+  ) : null;
 };
 
 export { AddCard };
