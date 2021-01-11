@@ -1,1 +1,1 @@
-export * from "./DishList";
+export * from "./DIshList";

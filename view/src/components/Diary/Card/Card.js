@@ -23,6 +23,9 @@ const useStyles = makeStyles({
     "@media (max-width: 650px)": {
       flexBasis: "100%",
     },
+    "@media (min-height: 1000px)": {
+      maxHeight: "50%",
+    },
   },
   card: {
     height: "100%",

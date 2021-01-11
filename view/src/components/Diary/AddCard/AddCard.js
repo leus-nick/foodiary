@@ -16,6 +16,10 @@ const useStyles = makeStyles(() => ({
     "@media (max-width:650px)": {
       flexBasis: "100%",
     },
+    "@media (min-height: 1000px)": {
+      maxHeight: "50%",
+      minHeight: "50%",
+    },
   },
   noneContainer: {
     display: "none",
@@ -38,9 +42,9 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const AddCard = ({ handleClick, expanded, check }) => {
+const AddCard = ({ handleClick, expanded }) => {
   const styles = useStyles();
-  return !check ? (
+  return (
     <div className={expanded ? styles.noneContainer : styles.container}>
       <Card
         onClick={handleClick}
@@ -56,7 +60,7 @@ const AddCard = ({ handleClick, expanded, check }) => {
         </ButtonBase>
       </Card>
     </div>
-  ) : null;
+  );
 };
 
 export { AddCard };

@@ -119,7 +119,6 @@ const ExpandedCard = ({
   expandCard,
   setId,
   sum,
-  menu,
   showMenu,
 }) => {
   const styles = useStyles();

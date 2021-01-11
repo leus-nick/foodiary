@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
-import { DishList } from "../DishList";
 import { AddCard } from "./AddCard";
-import { MobileList } from "../MobileDishList";
+import { DishList } from "../DishList";
 import { DiaryItem } from "./DiaryItem";
 import { Goal } from "../Goal";
 import { v4 as uuidv4 } from "uuid";
@@ -325,7 +324,7 @@ const Diary = () => {
               : styles.cards
           }
         >
-          <AddCard expanded={showMenu} handleClick={handleAddCardClick} F />
+          <AddCard expanded={showMenu} handleClick={handleAddCardClick} />
           {Object.values(cards)
             .reverse()
             .map((card) => {
@@ -344,17 +343,11 @@ const Diary = () => {
             })}
         </div>
         {showMenu ? (
-          !mobileMenu ? (
-            <DishList
-              addToCard={handleAddToCardClick}
-              showMenu={handleShowMenu}
-            />
-          ) : (
-            <MobileList
-              addToCard={handleAddToCardClick}
-              showMenu={handleShowMenu}
-            />
-          )
+          <DishList
+            addToCard={handleAddToCardClick}
+            showMenu={handleShowMenu}
+            menu={mobileMenu}
+          />
         ) : null}
       </div>
     </Container>

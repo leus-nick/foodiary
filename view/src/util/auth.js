@@ -11,5 +11,6 @@ export const authMiddleWare = (history) => {
 
   if (authToken === null || diff_minutes(nowTime, authTokenTime) >= 60) {
     history.push("/login");
+    window.location.reload();
   }
 };

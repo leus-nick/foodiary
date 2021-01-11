@@ -28,7 +28,6 @@ const Home = (props) => {
           JSON.stringify(response.data.results)
         );
         setDishItems(response.data.results);
-        console.log("api call");
       })
       .catch((error) => {
         console.log(error);
