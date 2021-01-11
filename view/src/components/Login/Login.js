@@ -147,7 +147,6 @@ const Login = (props) => {
                 id="email"
                 label="Email Address"
                 name="email"
-                autoComplete="email"
                 autoFocus
                 className={styles.input}
                 onChange={(event) => setEmail(event.target.value)}
@@ -162,7 +161,6 @@ const Login = (props) => {
                 label="Password"
                 type="password"
                 id="password"
-                autoComplete="current-password"
                 className={styles.input}
                 onChange={(event) => setPassword(event.target.value)}
               />

@@ -58,7 +58,6 @@ const Diary = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [mobileMenu, setMobileMenu] = useState(false);
   const [expandedCard, setExpandedCard] = useState("");
-  const [sum, setSum] = useState(0);
 
   useEffect(() => {
     fetchUserDetails();
@@ -165,7 +164,7 @@ const Diary = () => {
     let dateCheck;
 
     Object.values(cards).map((card) => {
-      dateCheck = dateCheker(card) && !dateCheck ? true : false;
+      return (dateCheck = dateCheker(card) && !dateCheck ? true : false);
     });
 
     if (dateCheck) {
@@ -235,7 +234,7 @@ const Diary = () => {
       if (card.id === expandedCard) {
         console.log(card.day);
         card.dishes.map((innerDish) => {
-          sum += innerDish.calories;
+          return (sum += innerDish.calories);
         });
         sum += dish.calories;
         return card;

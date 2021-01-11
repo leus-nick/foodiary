@@ -149,7 +149,6 @@ const Signup = (props) => {
                 id="username"
                 label="User Name"
                 name="username"
-                autoComplete="username"
                 helperText={errors.username}
                 error={errors.username ? true : false}
                 className={styles.input}
@@ -165,7 +164,6 @@ const Signup = (props) => {
                 id="goal"
                 label="Goal"
                 name="goal"
-                autoComplete="goal"
                 helperText={errors.goal}
                 error={errors.goal ? true : false}
                 className={styles.input}
@@ -180,7 +178,6 @@ const Signup = (props) => {
                 id="email"
                 label="Email Address"
                 name="email"
-                autoComplete="email"
                 helperText={errors.email}
                 error={errors.email ? true : false}
                 className={styles.input}
@@ -196,7 +193,6 @@ const Signup = (props) => {
                 label="Password"
                 type="password"
                 id="password"
-                autoComplete="current-password"
                 helperText={errors.password}
                 error={errors.password ? true : false}
                 className={styles.input}
@@ -213,7 +209,6 @@ const Signup = (props) => {
                 label="Confirm Password"
                 type="password"
                 id="confirmPassword"
-                autoComplete="current-password"
                 helperText={errors.confirmPassword}
                 error={errors.confirmPassword ? true : false}
                 className={styles.input}
